@@ -66,7 +66,7 @@ const HeroSection = () => {
                     />
                 ))}
                 <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/50 to-orange-600/30 
-                              backdrop-blur-[2px] transition-opacity duration-1000" />
+                               transition-opacity duration-1000" />
             </div>
             <Navbar />
             <div className="relative z-10 flex items-center justify-between  h-full px-8 pb-16">
