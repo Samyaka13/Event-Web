@@ -30,7 +30,7 @@ export default function Home() {
     <ReactLenis root options={options}>
       <div className="relative w-full">
 
-        <main className="relative min-h-screen  w-full">
+        <main className=" z-0 relative min-h-screen  w-full">
           <HeroSection />
           <Vision />
           <Event />
