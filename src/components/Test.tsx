@@ -1,10 +1,13 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
-// @ts-expect-error
+// @ts-expect-error: No type definitions available for vanta effect
 import RINGS from "vanta/dist/vanta.rings.min"
 import * as THREE from "three";
+type VantaEffectType = {
+  destroy: () => void;
+};
 function Test() {
-    const [vantaEffect, setVantaEffect] = useState<any>(null);
+     const [vantaEffect, setVantaEffect] = useState<VantaEffectType | null>(null);
     const vantaRef = useRef(null);
 
     useEffect(() => {

@@ -1,11 +1,13 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from "three";
-// @ts-expect-error
+// @ts-expect-error: No type definitions available for vanta effect
 import HALO from "vanta/dist/vanta.halo.min"
-
+type VantaEffectType = {
+    destroy: () => void;
+};
 function BackgroundAnimation() {
-    const [vantaEffect, setVantaEffect] = useState<any>(null);
+    const [vantaEffect, setVantaEffect] = useState<VantaEffectType | null>(null);
     const vantaRef = useRef(null);
 
     useEffect(() => {
