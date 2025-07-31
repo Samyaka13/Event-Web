@@ -1,9 +1,10 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
+// @ts-ignore
 import RINGS from "vanta/dist/vanta.rings.min"
 import * as THREE from "three";
 function Test() {
-    const [vantaEffect, setVantaEffect] = useState(null);
+    const [vantaEffect, setVantaEffect] = useState<any>(null);
     const vantaRef = useRef(null);
 
     useEffect(() => {
