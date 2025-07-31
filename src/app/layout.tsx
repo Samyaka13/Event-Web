@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Space_Grotesk, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import BackgroundAnimation from "@/components/BackgroundAnimation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,12 +38,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${outfit.variable} antialiased font-outfit`}
+        className={`${geistSans.variable} ${geistMono.variable} ${spaceGrotesk.variable} ${outfit.variable} antialiased font-outfit relative min-h-screen`}
       >
-        <div className={`fixed top-0 left-0  right-0 z-50 transition-all duration-300 `}>
+        <BackgroundAnimation />
+        <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300`}>
           <Navbar />
         </div>
-        {children}
+        <main className="relative z-10">{children}</main>
       </body>
     </html>
   );
