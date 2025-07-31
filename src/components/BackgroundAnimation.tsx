@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from "three";
-// @ts-ignore
+// @ts-expect-error
 import HALO from "vanta/dist/vanta.halo.min"
 
 function BackgroundAnimation() {

@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useRef, useState } from 'react';
-// @ts-ignore
+// @ts-expect-error
 import RINGS from "vanta/dist/vanta.rings.min"
 import * as THREE from "three";
 function Test() {
