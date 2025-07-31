@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Calendar, Users, Star, TrendingUp, MapPin, Clock } from 'lucide-react';
-import Navbar from './Navbar';
 import Typewriter from 'typewriter-effect';
 const HeroSection = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -33,7 +32,7 @@ const HeroSection = () => {
             setCurrentHeadingIndex((prevIndex) =>
                 (prevIndex + 1) % headings.length
             );
-        }, 5000); // Slightly longer interval for headings
+        }, 5000);
 
         return () => {
             clearInterval(imageInterval);
@@ -48,7 +47,7 @@ const HeroSection = () => {
     ];
 
     return (
-        <div className="relative h-screen w-full overflow-hidden">
+        <div className="relative h-screen w-full pt-40 overflow-hidden">
             <div className="absolute inset-0">
                 {backgroundImages.map((image, index) => (
                     <div
@@ -68,7 +67,6 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-purple-900/50 to-orange-600/30 
                                transition-opacity duration-1000" />
             </div>
-            <Navbar />
             <div className="relative z-10 flex items-center justify-between  h-full px-8 pb-16">
 
                 <div className=" flex-col max-w-3xl  ">
