@@ -1,76 +1,391 @@
-"use client"
+"use client";
 import React, { useEffect, useRef, useState } from 'react';
 // @ts-expect-error: No type definitions available for vanta effect
-import RINGS from "vanta/dist/vanta.rings.min"
+import RINGS from "vanta/dist/vanta.rings.min";
 import * as THREE from "three";
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Sparkles, Users, Clock, Star, Play, Zap, Target } from 'lucide-react';
+
 type VantaEffectType = {
   destroy: () => void;
 };
-function Test() {
-     const [vantaEffect, setVantaEffect] = useState<VantaEffectType | null>(null);
-    const vantaRef = useRef(null);
 
-    useEffect(() => {
-        if (!vantaEffect) {
-            setVantaEffect(RINGS({
-                el: vantaRef.current,
-                THREE,
-                color: 0x14b679,
-                backgroundColor: 0x15173c,
-                maxDistance: 34.0,
-            }))
-        }
-        return () => {
-            if (vantaEffect) vantaEffect.destroy();
-        };
-    }, [vantaEffect]);
+function EnhancedTest() {
+  const [vantaEffect, setVantaEffect] = useState<VantaEffectType | null>(null);
+  const [selectedZone, setSelectedZone] = useState<number | null>(null);
+  const [hoveredZone, setHoveredZone] = useState<number | null>(null);
+  const vantaRef = useRef(null);
+  const containerRef = useRef(null);
 
-    return (
-        <div ref={vantaRef} className="relative min-h-screen w-full overflow-hidden">
-            <div className="absolute inset-0 w-full h-full"  />
-            <div  className="absolute inset-0 bg-black/50 " />
-            <div className="text-white relative z-10 min-h-screen">
-                sdasdsaf
-            </div>
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
+  useEffect(() => {
+    if (!vantaEffect) {
+      setVantaEffect(
+        RINGS({
+          el: vantaRef.current,
+          THREE,
+          color: 0x14b679,
+          backgroundColor: 0x0a0a0f,
+          maxDistance: 40.0,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
+          speed: 0.8
+        })
+      );
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy();
+    };
+  }, [vantaEffect]);
+
+  const experienceZones = [
+    {
+      title: "AI Art Studio",
+      emoji: "🎨",
+      description: "Transform your wildest ideas into stunning AI-generated masterpieces with state-of-the-art generative models",
+      color: "from-violet-400 via-purple-500 to-indigo-600",
+      glowColor: "violet-500",
+      available: true,
+      participants: 127,
+      duration: "45 min",
+      rating: 4.9,
+      features: ["Real-time Generation", "Style Transfer", "Custom Prompts"]
+    },
+    {
+      title: "Robotics Lab",
+      emoji: "🤖",
+      description: "Interact with cutting-edge autonomous robots and witness the future of human-machine collaboration",
+      color: "from-cyan-400 via-blue-500 to-indigo-600",
+      glowColor: "cyan-500",
+      available: true,
+      participants: 89,
+      duration: "60 min",
+      rating: 4.8,
+      features: ["Interactive Demos", "Programming Interface", "Live Robots"]
+    },
+    {
+      title: "Neural Network Hub",
+      emoji: "🧠",
+      description: "Experience real-time AI decision making and explore the intricate world of neural networks",
+      color: "from-emerald-400 via-green-500 to-teal-600",
+      glowColor: "emerald-500",
+      available: false,
+      participants: 0,
+      duration: "30 min",
+      rating: 4.7,
+      features: ["Neural Visualization", "Live Training", "Interactive Models"]
+    },
+    {
+      title: "AI Music Studio",
+      emoji: "🎧",
+      description: "Create unique musical compositions and soundscapes with advanced AI music generation technology",
+      color: "from-pink-400 via-rose-500 to-red-600",
+      glowColor: "pink-500",
+      available: true,
+      participants: 156,
+      duration: "40 min",
+      rating: 4.9,
+      features: ["Music Generation", "Beat Creation", "Voice Synthesis"]
+    },
+    {
+      title: "VR Intelligence",
+      emoji: "🕹️",
+      description: "Immerse yourself in AI-powered virtual reality experiences that adapt to your every move",
+      color: "from-orange-400 via-amber-500 to-yellow-600",
+      glowColor: "orange-500",
+      available: true,
+      participants: 73,
+      duration: "50 min",
+      rating: 4.8,
+      features: ["VR Headsets", "AI Adaptation", "Immersive Worlds"]
+    },
+    {
+      title: "Code Arena",
+      emoji: "💻",
+      description: "Participate in live AI coding challenges and witness real-time code generation and optimization",
+      color: "from-indigo-400 via-blue-500 to-cyan-600",
+      glowColor: "indigo-500",
+      available: true,
+      participants: 234,
+      duration: "35 min",
+      rating: 4.9,
+      features: ["Live Coding", "AI Assistant", "Real-time Collaboration"]
+    }
+  ];
+
+  const stats = [
+    { label: "Active Participants", value: "2.3K+", icon: Users },
+    { label: "Experience Zones", value: "6", icon: Target },
+    { label: "Average Rating", value: "4.8★", icon: Star },
+    { label: "Live Sessions", value: "24/7", icon: Zap }
+  ];
+
+  return (
+    <div ref={vantaRef} className="relative min-h-screen w-full overflow-hidden">
+      {/* Enhanced overlay with gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+      
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-emerald-400 rounded-full"
+            animate={{
+              x: [0, Math.random() * 100 - 50],
+              y: [0, Math.random() * 100 - 50],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: Math.random() * 3 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+          />
+        ))}
+      </div>
+
+      <motion.div 
+        ref={containerRef}
+        style={{ y, opacity }}
+        className="relative z-10 container mx-auto px-4 py-20 text-white"
+      >
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="mb-8"
+          >
+            <h2 className="text-6xl md:text-8xl font-space-grotesk font-bold mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-500 bg-clip-text text-transparent animate-gradient-x">
+                Experience AI
+              </span>
+              <br />
+              <span className="text-white/90">Like Never Before</span>
+            </h2>
+          </motion.div>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-white/80 font-outfit text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto mb-12"
+          >
+            Immerse yourself in the future of technology through our interactive zones, 
+            hands-on demonstrations, and cutting-edge AI experiences.
+          </motion.p>
+
+          {/* Stats Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-16"
+          >
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center p-4 backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10">
+                <stat.icon className="w-6 h-6 mx-auto mb-2 text-emerald-400" />
+                <div className="text-2xl font-bold text-white">{stat.value}</div>
+                <div className="text-sm text-white/60">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
         </div>
-    );
+
+        {/* Experience Zones Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {experienceZones.map((zone, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              onHoverStart={() => setHoveredZone(index)}
+              onHoverEnd={() => setHoveredZone(null)}
+              onClick={() => setSelectedZone(index)}
+              className="group relative p-8 backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 
+                         rounded-3xl border border-white/20 cursor-pointer overflow-hidden
+                         hover:border-emerald-500/50 transition-all duration-500"
+            >
+              {/* Animated background glow */}
+              <motion.div
+                className={`absolute inset-0 bg-gradient-to-br ${zone.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
+                animate={{
+                  background: hoveredZone === index 
+                    ? `linear-gradient(135deg, var(--tw-gradient-stops))` 
+                    : 'transparent'
+                }}
+              />
+
+              {/* Glowing border effect */}
+              <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 
+                              shadow-2xl shadow-${zone.glowColor}/20`} />
+
+              <div className="relative z-10">
+                {/* Status Badge */}
+                <div className="flex justify-between items-start mb-4">
+                  <motion.span 
+                    className="text-5xl block"
+                    whileHover={{ scale: 1.2, rotate: 10 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    {zone.emoji}
+                  </motion.span>
+                  {zone.available && (
+                    <div className="flex items-center gap-1 px-3 py-1 bg-emerald-500/20 rounded-full text-xs text-emerald-400 border border-emerald-500/30">
+                      <Play className="w-3 h-3" />
+                      <span>Live</span>
+                    </div>
+                  )}
+                </div>
+
+                <h3 className="text-2xl font-space-grotesk font-bold text-white mb-3 group-hover:text-emerald-200 transition-colors duration-300">
+                  {zone.title}
+                </h3>
+                
+                <p className="text-white/80 font-outfit leading-relaxed mb-6 group-hover:text-white transition-colors duration-300">
+                  {zone.description}
+                </p>
+
+                {/* Zone Stats */}
+                <div className="flex items-center gap-4 mb-6 text-sm text-white/60">
+                  <div className="flex items-center gap-1">
+                    <Users className="w-4 h-4" />
+                    <span>{zone.participants}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    <span>{zone.duration}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star className="w-4 h-4 text-yellow-400" />
+                    <span>{zone.rating}</span>
+                  </div>
+                </div>
+
+                {/* Features */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {zone.features.map((feature, idx) => (
+                    <span key={idx} className="px-2 py-1 bg-white/10 rounded-lg text-xs text-white/70">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+
+                <motion.button 
+                  className={`w-full flex items-center justify-center gap-2 py-3 px-6 rounded-2xl font-outfit font-medium transition-all duration-300 ${
+                    zone.available 
+                      ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white hover:from-emerald-400 hover:to-cyan-400 hover:shadow-lg hover:shadow-emerald-500/25' 
+                      : 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
+                  }`}
+                  whileHover={zone.available ? { scale: 1.05 } : {}}
+                  whileTap={zone.available ? { scale: 0.95 } : {}}
+                  disabled={!zone.available}
+                >
+                  <span>{zone.available ? 'Enter Experience' : 'Coming Soon'}</span>
+                  {zone.available && <ArrowRight className="w-4 h-4" />}
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-center mt-20"
+        >
+          <motion.button
+            className="group relative px-12 py-4 bg-gradient-to-r from-emerald-500 via-cyan-500 to-violet-500 
+                       rounded-full text-white font-outfit font-semibold text-lg overflow-hidden"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-violet-500 via-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            />
+            <span className="relative z-10 flex items-center gap-2">
+              Start Your AI Journey
+              <Sparkles className="w-5 h-5" />
+            </span>
+          </motion.button>
+        </motion.div>
+      </motion.div>
+
+      {/* Modal for selected zone */}
+      <AnimatePresence>
+        {selectedZone !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setSelectedZone(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl border border-white/20 max-w-md w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="text-center">
+                <span className="text-6xl mb-4 block">{experienceZones[selectedZone].emoji}</span>
+                <h3 className="text-2xl font-bold text-white mb-4">{experienceZones[selectedZone].title}</h3>
+                <p className="text-white/80 mb-6">{experienceZones[selectedZone].description}</p>
+                <button
+                  className="w-full py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-2xl text-white font-semibold"
+                  onClick={() => setSelectedZone(null)}
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Enhanced Styles */}
+      <style jsx>{`
+        @keyframes gradient-x {
+          0%, 100% { 
+            background-size: 200% 200%; 
+            background-position: left center; 
+          }
+          50% { 
+            background-size: 200% 200%; 
+            background-position: right center; 
+          }
+        }
+
+        .animate-gradient-x {
+          animation: gradient-x 4s ease infinite;
+        }
+
+        .backdrop-blur-xl {
+          backdrop-filter: blur(16px);
+        }
+      `}</style>
+    </div>
+  );
 }
 
-export default Test;
-
-// import React, { useEffect, useRef, useState } from 'react';
-// import HALO from "vanta/dist/vanta.halo.min"
-// import * as THREE from "three";
-// function Test() {
-//     const [vantaEffect, setVantaEffect] = useState(null);
-//     const vantaRef = useRef(null);
-
-//      useEffect(() => {
-//     if (!vantaEffect) {
-//       setVantaEffect(
-//         HALO({
-//           el: vantaRef.current,
-//           THREE,
-//           color: 0x14b679,
-//           backgroundColor: 0x15173c,
-//           maxDistance: 34.0,
-//         })
-//       );
-//     }
-//     return () => {
-//       if (vantaEffect) vantaEffect.destory();
-//     };
-//   }, [vantaEffect]);
-
-//     return (
-//         <div className="relative z-50 min-h-screen w-full overflow-hidden">
-//             <div className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }} />
-//             <div  className="absolute inset-0 bg-black/50 " />
-//             <div ref={vantaRef} className="relative z-10 min-h-screen">
-//                 checkdasfsdfdsfdfgdfgsfgsdfgsdfgdf
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default Test;
+export default EnhancedTest;

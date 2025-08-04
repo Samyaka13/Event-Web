@@ -34,7 +34,6 @@ export default function Home() {
           <HeroSection />
           <Vision />
           <Event />
-          <Experience />
           <Test/>
         </main>
       </div>
