@@ -50,7 +50,7 @@ function Experience() {
   ];
 
   return (
-    <div className="relative min-h-screen w-full bg-black py-20 overflow-hidden">
+    <div  className="relative min-h-screen w-full bg-black py-20 overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-orange-900/20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(114,39,175,0.2),transparent_50%)]" />

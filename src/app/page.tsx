@@ -6,6 +6,8 @@ import Test from "@/components/Test";
 import { ReactLenis } from 'lenis/react'
 import { useState, useEffect } from 'react';
 import SpeakerSponsorSections from "@/components/SpeakerSection";
+import Experience from "@/components/Experience";
+import Footer from "@/components/Footer";
 
 const options = {
   lerp: 0.1,
@@ -33,9 +35,11 @@ export default function Home() {
         <main className=" z-0 relative min-h-screen  w-full">
           <HeroSection />
           <Vision />
+
           <Event />
           <Test />
           <SpeakerSponsorSections />
+          <Footer/>
         </main>
       </div>
     </ReactLenis>

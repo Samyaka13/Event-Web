@@ -38,7 +38,7 @@ function Vision() {
     ];
 
     return (
-        <div ref={sectionRef} className="relative min-h-screen w-full overflow-hidden">
+        <div id='Agenda' ref={sectionRef} className="relative min-h-screen w-full overflow-hidden">
             {/* Dark backdrop for better content visibility */}
             <div className="absolute inset-0 bg-black/40" />
 

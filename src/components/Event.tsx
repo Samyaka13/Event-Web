@@ -73,7 +73,7 @@ function Event() {
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden">
+    <div id='Schedule' className="relative min-h-screen w-full overflow-hidden">
       <div className="absolute inset-0 bg-black/40" />
 
       <div className="relative z-20 container mx-auto px-4 py-20">
