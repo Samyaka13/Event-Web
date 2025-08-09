@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from './ui/button';
   export const handleScroll = (sectionId: string) => {
-    let section = document.getElementById(sectionId) || 
+    const section = document.getElementById(sectionId) || 
                  document.getElementById(sectionId.toLowerCase());
     
     if (section) {
