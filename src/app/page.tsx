@@ -1,11 +1,11 @@
 "use client"
 import Event from "@/components/Event";
-import Experience from "@/components/Experience";
 import HeroSection from "@/components/HeroSection";
 import Vision from "@/components/Vision";
 import Test from "@/components/Test";
 import { ReactLenis } from 'lenis/react'
 import { useState, useEffect } from 'react';
+import SpeakerSponsorSections from "@/components/SpeakerSection";
 
 const options = {
   lerp: 0.1,
@@ -34,7 +34,8 @@ export default function Home() {
           <HeroSection />
           <Vision />
           <Event />
-          <Test/>
+          <Test />
+          <SpeakerSponsorSections />
         </main>
       </div>
     </ReactLenis>

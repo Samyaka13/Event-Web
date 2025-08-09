@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
 // @ts-expect-error: No type definitions available for vanta effect
-import RINGS from "vanta/dist/vanta.rings.min";
+import CELLS from "vanta/dist/vanta.cells.min.js";
 import * as THREE from "three";
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles, Users, Clock, Star, Play, Zap, Target } from 'lucide-react';
@@ -28,17 +28,19 @@ function EnhancedTest() {
   useEffect(() => {
     if (!vantaEffect) {
       setVantaEffect(
-        RINGS({
+        CELLS({
           el: vantaRef.current,
           THREE,
-          color: 0x14b679,
-          backgroundColor: 0x0a0a0f,
+          color: 0x15173c,
+          backgroundColor: 0x15173c,
           maxDistance: 40.0,
           minHeight: 200.00,
           minWidth: 200.00,
           scale: 1.00,
           scaleMobile: 1.00,
-          speed: 0.8
+          speed: 0.8,
+          color1: 0x787884,
+          color2: 0x15173c
         })
       );
     }
@@ -133,7 +135,7 @@ function EnhancedTest() {
     <div ref={vantaRef} className="relative min-h-screen w-full overflow-hidden">
       {/* Enhanced overlay with gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-      
+
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -158,7 +160,7 @@ function EnhancedTest() {
         ))}
       </div>
 
-      <motion.div 
+      <motion.div
         ref={containerRef}
         style={{ y, opacity }}
         className="relative z-10 container mx-auto px-4 py-20 text-white"
@@ -179,14 +181,14 @@ function EnhancedTest() {
               <span className="text-white/90">Like Never Before</span>
             </h2>
           </motion.div>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-white/80 font-outfit text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto mb-12"
           >
-            Immerse yourself in the future of technology through our interactive zones, 
+            Immerse yourself in the future of technology through our interactive zones,
             hands-on demonstrations, and cutting-edge AI experiences.
           </motion.p>
 
@@ -227,8 +229,8 @@ function EnhancedTest() {
               <motion.div
                 className={`absolute inset-0 bg-gradient-to-br ${zone.color} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
                 animate={{
-                  background: hoveredZone === index 
-                    ? `linear-gradient(135deg, var(--tw-gradient-stops))` 
+                  background: hoveredZone === index
+                    ? `linear-gradient(135deg, var(--tw-gradient-stops))`
                     : 'transparent'
                 }}
               />
@@ -240,7 +242,7 @@ function EnhancedTest() {
               <div className="relative z-10">
                 {/* Status Badge */}
                 <div className="flex justify-between items-start mb-4">
-                  <motion.span 
+                  <motion.span
                     className="text-5xl block"
                     whileHover={{ scale: 1.2, rotate: 10 }}
                     transition={{ type: "spring", stiffness: 300 }}
@@ -258,7 +260,7 @@ function EnhancedTest() {
                 <h3 className="text-2xl font-space-grotesk font-bold text-white mb-3 group-hover:text-emerald-200 transition-colors duration-300">
                   {zone.title}
                 </h3>
-                
+
                 <p className="text-white/80 font-outfit leading-relaxed mb-6 group-hover:text-white transition-colors duration-300">
                   {zone.description}
                 </p>
@@ -288,12 +290,11 @@ function EnhancedTest() {
                   ))}
                 </div>
 
-                <motion.button 
-                  className={`w-full flex items-center justify-center gap-2 py-3 px-6 rounded-2xl font-outfit font-medium transition-all duration-300 ${
-                    zone.available 
-                      ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white hover:from-emerald-400 hover:to-cyan-400 hover:shadow-lg hover:shadow-emerald-500/25' 
-                      : 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
-                  }`}
+                <motion.button
+                  className={`w-full flex items-center justify-center gap-2 py-3 px-6 rounded-2xl font-outfit font-medium transition-all duration-300 ${zone.available
+                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white hover:from-emerald-400 hover:to-cyan-400 hover:shadow-lg hover:shadow-emerald-500/25'
+                    : 'bg-gray-600/50 text-gray-400 cursor-not-allowed'
+                    }`}
                   whileHover={zone.available ? { scale: 1.05 } : {}}
                   whileTap={zone.available ? { scale: 0.95 } : {}}
                   disabled={!zone.available}

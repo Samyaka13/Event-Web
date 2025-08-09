@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from "three";
 // @ts-expect-error: No type definitions available for vanta effect
-import HALO from "vanta/dist/vanta.halo.min"
+import RINGS from "vanta/dist/vanta.rings.min"
 type VantaEffectType = {
     destroy: () => void;
 };
@@ -12,7 +12,7 @@ function BackgroundAnimation() {
 
     useEffect(() => {
         if (!vantaEffect) {
-            setVantaEffect(HALO({
+            setVantaEffect(RINGS({
                 el: vantaRef.current,
                 THREE,
                 color: 0x14b679,
